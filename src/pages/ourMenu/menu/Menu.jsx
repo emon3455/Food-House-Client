@@ -1,4 +1,7 @@
 import { Helmet } from "react-helmet-async";
+import Cover from "../../../shared/cover/Cover";
+import menuImg from "../../../assets/menu/banner3.jpg"
+import PopularMenu from "../../home/popularMenu/Popularmenu";
 
 const Menu = () => {
     return (
@@ -6,7 +9,14 @@ const Menu = () => {
             <Helmet>
                 <title>Food house | Menu</title>
             </Helmet>
-            <h2>this is our menu page</h2>
+
+            <Cover img={menuImg} heading="OUR MENU" text="would you like to try a dish"></Cover>
+            <PopularMenu></PopularMenu>
+            <Cover img={menuImg} heading="OUR MENU" text="would you like to try a dish"></Cover>
+            <PopularMenu></PopularMenu>
+            <Cover img={menuImg} heading="OUR MENU" text="would you like to try a dish"></Cover>
+            <PopularMenu></PopularMenu>
+
         </div>
     );
 };
