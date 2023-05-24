@@ -14,7 +14,7 @@ import { Helmet } from 'react-helmet-async';
 const OurShop = () => {
 
 
-    const categories = ["salad","pizza","soup", "dessert", "drinks"];
+    const categories = ["salad","pizza","soup", "desert", "drinks"];
     const {category} = useParams();
     const initialIndex = categories.indexOf(category);
 
