@@ -2,21 +2,42 @@
 import { Link } from "react-router-dom";
 import login from "../../assets/others/authentication1.png";
 import { FaFacebookF, FaGithub, FaGoogle } from "react-icons/fa";
+import { loadCaptchaEnginge, LoadCanvasTemplate, validateCaptcha } from 'react-simple-captcha';
+import { useEffect, useRef, useState } from "react";
 
 const Login = () => {
 
-    const handleSubmit=(e)=>{
+    const ref= useRef(null);
+    const [disable, setDisble] = useState(true);
+
+    useEffect(()=>{
+        loadCaptchaEnginge(6); 
+    },[])
+
+    const handleSubmit = (e) => {
         e.preventDefault();
         const form = e.target;
         const email = form.email.value;
         const password = form.password.value;
-        const text = form.capta.value;
-        console.log(email,password,text);
+
+        console.log(email, password);
+    }
+
+    const handleCaptaValidation=()=>{
+        const userCapta = ref.current.value;
+        console.log(userCapta);
+        if (validateCaptcha(userCapta)==true) {
+            setDisble(false);
+        }
+   
+        else {
+            setDisble(true);
+        }
     }
 
     return (
-        <div className='my-20' >
-            <div className="grid grid-cols-1 md:grid-cols-2 justify-items-center gap-5 p-2">
+        <div className='mt-10' >
+            <div className="grid grid-cols-1 md:grid-cols-2 justify-items-center items-center gap-5 p-2">
                 <div className="card w-full max-w-sm drop-shadow-2xl bg-base-100 order-2 md:order-1">
                     <form onSubmit={handleSubmit} className="card-body">
                         <h2 className="text-3xl font-bold text-center">Login</h2>
@@ -35,19 +56,25 @@ const Login = () => {
                         </div>
 
                         <div className="form-control">
-                            <input type="text" id="capta" name="capta" placeholder="type here" className="p-2 border-2 rounded-lg w-full" />
+                            <label className="label">
+                                <LoadCanvasTemplate />
+                            </label>
                         </div>
 
-                        <input type="submit" value="Login" className="btn btn-warning btn-sm" />
+                        <div className="flex justify-between gap-4">
+                            <input type="text" id="capta" ref={ref} name="capta" placeholder="type here" className="p-2 border-2 rounded-lg w-full" />
+                            <button onClick={handleCaptaValidation} className="btn p-2">Check</button>
+                        </div>
+
+                        <input type="submit" value="Login" className="btn btn-warning btn-sm mt-2" disabled={disable}/>
                     </form>
                     <div className="px-4 py-2">
                         <p className="text-center text-gray-600">
                             Don't have an Account? <Link className="text-sky-600" to="/register">Create an account</Link>
                         </p>
                         <p className="text-center font-bold">
-                            OR
+                            OR Login With
                         </p>
-
                         <div className="flex justify-evenly">
                             <span className="p-4 btn-ghost rounded-full text-sky-600 text-lg"><FaFacebookF></FaFacebookF></span>
                             <span className="p-4 btn-ghost rounded-full text-orange-400 text-lg"><FaGoogle></FaGoogle></span>
