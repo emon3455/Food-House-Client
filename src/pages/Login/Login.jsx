@@ -7,56 +7,56 @@ import { loadCaptchaEnginge, LoadCanvasTemplate, validateCaptcha } from 'react-s
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../provider/AuthProvider";
 import Swal from "sweetalert2";
+import { useForm } from "react-hook-form";
 
 const Login = () => {
 
-    const {signInUser} = useContext(AuthContext);
+    const { register, handleSubmit, reset, formState: { errors } } = useForm();
+
+    const { signInUser } = useContext(AuthContext);
     const [disable, setDisble] = useState(true);
 
     const navigate = useNavigate();
     const location = useLocation();
     const from = location.state?.from?.pathname || "/";
 
-    useEffect(()=>{
-        loadCaptchaEnginge(6); 
-    },[])
+    useEffect(() => {
+        loadCaptchaEnginge(6);
+    }, [])
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        const form = e.target;
-        const email = form.email.value;
-        const password = form.password.value;
-
-        signInUser(email,password)
-        .then(res => {
-            const logedUser = res.user;
-            if (logedUser) {
-                Swal.fire(
-                    'Successfully Loged In!',
-                    'Success!',
-                    'success'
-                )
-                navigate(from, {replace: true});    
-            }
-            else {
-                return;
-            }
-        })
-        .catch(er => {
-            Swal.fire({
-                icon: 'error',
-                title: 'Oops...',
-                text: 'Something went wrong!',
+    const onSubmit = data => {
+        console.log(data)
+        reset();
+        signInUser(data.email, data.password)
+            .then(res => {
+                const logedUser = res.user;
+                if (logedUser) {
+                    Swal.fire(
+                        'Successfully Loged In!',
+                        'Success!',
+                        'success'
+                    )
+                    navigate(from, { replace: true });
+                }
+                else {
+                    return;
+                }
             })
-        })
-    }
-    const handleCaptaValidation=(e)=>{
+            .catch(er => {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Something went wrong!',
+                })
+            })
+    };
+    const handleCaptaValidation = (e) => {
         const userCapta = e.target.value;
         console.log(userCapta);
-        if (validateCaptcha(userCapta)==true) {
+        if (validateCaptcha(userCapta) == true) {
             setDisble(false);
         }
-   
+
         else {
             setDisble(true);
         }
@@ -66,20 +66,30 @@ const Login = () => {
         <div className='mt-10' >
             <div className="grid grid-cols-1 md:grid-cols-2 justify-items-center items-center gap-5 p-2">
                 <div className="card w-full max-w-sm drop-shadow-2xl bg-base-100 order-2 md:order-1">
-                    <form onSubmit={handleSubmit} className="card-body">
+                    <form onSubmit={handleSubmit(onSubmit)} className="card-body">
                         <h2 className="text-3xl font-bold text-center">Login</h2>
                         <p className="text-center text-red-600">  </p>
                         <div className="form-control">
                             <label className="label">
                                 <span className="label-text">Email</span>
                             </label>
-                            <input type="email" placeholder="email" name="email" id="email" className="p-2 border-2 rounded-lg w-full" />
+                            <input type="email" placeholder="email" name="email" {...register("email", { required: true })} className="p-2 border-2 rounded-lg w-full" />
+                            {errors.email && <span className="text-red-600 ">email is required</span>}
                         </div>
                         <div className="form-control">
                             <label className="label">
                                 <span className="label-text">Password</span>
                             </label>
-                            <input type="password" id="password" name="password" placeholder="password" className="p-2 border-2 rounded-lg w-full" />
+                            <input type="password"  {...register("password", {
+                                required: true,
+                                minLength: 6,
+                                maxLength: 20,
+                                pattern: /(?=.*[A-Z])(?=.*[!@#$&*])(?=.*[0-9])(?=.*[a-z])/
+                            })} placeholder="password" className="input input-bordered" />
+                            {errors.password?.type === 'required' && <p className="text-red-600">Password is required</p>}
+                            {errors.password?.type === 'minLength' && <p className="text-red-600">Password must be 6 characters</p>}
+                            {errors.password?.type === 'maxLength' && <p className="text-red-600">Password must be less than 20 characters</p>}
+                            {errors.password?.type === 'pattern' && <p className="text-red-600">Password must have one Uppercase one lower case, one number and one special character.</p>}
                         </div>
 
                         <div className="form-control">
@@ -89,10 +99,10 @@ const Login = () => {
                         </div>
 
                         <div className="form-control">
-                            <input type="text" id="capta"  onBlur={handleCaptaValidation} name="capta" placeholder="type here" className="p-2 border-2 rounded-lg w-full" />
+                            <input type="text" id="capta" onBlur={handleCaptaValidation} name="capta" placeholder="type here" className="p-2 border-2 rounded-lg w-full" />
                         </div>
 
-                        <input type="submit" value="Login" className="btn btn-warning btn-sm mt-2" disabled={disable}/>
+                        <input type="submit" value="Login" className="btn btn-warning btn-sm mt-2" disabled={disable} />
                     </form>
                     <div className="px-4 py-2">
                         <p className="text-center text-gray-600">

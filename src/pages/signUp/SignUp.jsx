@@ -63,7 +63,7 @@ const SignUp = () => {
             <Helmet>
                 <title>Food house | SignUp</title>
             </Helmet>
-            <div className='mt-10' >
+            <div className='mt-2' >
                 <div className="grid grid-cols-1 md:grid-cols-2 justify-items-center items-center gap-5 p-2">
                     <div className="card w-full max-w-sm drop-shadow-2xl bg-base-100 order-2 md:order-1">
                         <form onSubmit={handleSubmit(onSubmit)} className="card-body">
@@ -75,6 +75,13 @@ const SignUp = () => {
                                 </label>
                                 <input type="text" name="name" {...register("name", { required: true })} placeholder="name" className="input input-bordered" />
                                 {errors.name && <span className="text-red-600 ">name is required</span>}
+                            </div>
+                            <div className="form-control">
+                                <label className="label">
+                                    <span className="label-text">Photo URL</span>
+                                </label>
+                                <input type="text" name="name" {...register("photo", { required: true })} placeholder="photo" className="input input-bordered" />
+                                {errors.photo && <span className="text-red-600 ">Photo URL is required</span>}
                             </div>
                             <div className="form-control">
                                 <label className="label">
