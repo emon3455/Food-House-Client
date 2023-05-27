@@ -102,7 +102,8 @@ const Login = () => {
                             <input type="text" id="capta" onBlur={handleCaptaValidation} name="capta" placeholder="type here" className="p-2 border-2 rounded-lg w-full" />
                         </div>
 
-                        <input type="submit" value="Login" className="btn btn-warning btn-sm mt-2" disabled={disable} />
+                        {/* To Do: we have to add this into submit button--- disabled={disable} */}
+                        <input type="submit" value="Login" className="btn btn-warning btn-sm mt-2"  />
                     </form>
                     <div className="px-4 py-2">
                         <p className="text-center text-gray-600">

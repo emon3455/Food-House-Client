@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import {createBrowserRouter} from "react-router-dom";
 import Main from "../layout/Main";
 import Home from "../pages/home/Home/Home";
@@ -18,11 +19,11 @@ export const router = createBrowserRouter([
         },
         {
           path: "/menu",
-          element: <PrivateRoute><Menu></Menu></PrivateRoute>
+          element: <Menu></Menu>
         },
         {
           path: "/shop/:category",
-          element: <PrivateRoute><OurShop></OurShop></PrivateRoute>
+          element: <OurShop></OurShop>
         },
         {
           path: "/login",
