@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/no-unescaped-entities */
 import { FaFacebookF, FaGithub, FaGoogle } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import img from "../../assets/others/authentication1.png"
 import { useForm } from "react-hook-form";
 import { Helmet } from "react-helmet-async";
@@ -12,7 +12,8 @@ import { updateProfile } from "firebase/auth";
 
 const SignUp = () => {
 
-    const { createUser } = useContext(AuthContext);
+    const { createUser, logOut } = useContext(AuthContext);
+    const navigate = useNavigate();
 
     const { register, handleSubmit, reset, formState: { errors } } = useForm();
     const onSubmit = data => {
@@ -21,6 +22,7 @@ const SignUp = () => {
         createUser(data.email, data.password)
             .then(res => {
                 const createdUser = res.user;
+                console.log(createdUser);
                 if (createdUser) {
                     Swal.fire(
                         'User created Successfully!',
@@ -28,13 +30,20 @@ const SignUp = () => {
                         'success'
                     )
                     updateProfile(createdUser, {
-                        displayName: data.name
+                        displayName: data.name, photoURL: data.photo
                     }).then(() => {
                         Swal.fire(
                             'User Profile Updated!',
                             'Success!',
                             'success'
-                        )
+                        );
+
+                        logOut()
+                            .then(() => {
+                                navigate("/login", { replace: true });
+                            })
+                            .catch(er => console.log(er))
+
                     }).catch((error) => {
                         Swal.fire({
                             icon: 'error',
@@ -42,7 +51,7 @@ const SignUp = () => {
                             text: 'Sorry user profile Cannot Updated!',
                         })
                     });
-                    
+
                 }
                 else {
                     return;
