@@ -3,6 +3,7 @@ import { useContext } from "react";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../provider/AuthProvider";
 import Swal from "sweetalert2";
+import { FaShoppingCart } from "react-icons/fa";
 
 const Navbar = () => {
 
@@ -34,7 +35,7 @@ const Navbar = () => {
             user
                 ?
                 <>
-                    <li onClick={handleLogOut} className="bg-warning rounded-xl font-bold py-0"><span>Logout</span></li>
+                    <li><span onClick={handleLogOut} className="bg-warning rounded-xl font-bold py-0 my-auto btn-sm">Logout</span></li>
                 </>
                 :
                 <li><Link to="/login">Log In</Link></li>
@@ -63,6 +64,16 @@ const Navbar = () => {
                             {navMenu}
                         </ul>
                     </div>
+
+                    <Link to="/">
+                        <label className="btn btn-ghost btn-circle">
+                            <div className="indicator">
+                                <FaShoppingCart className="text-2xl font-normal"></FaShoppingCart>
+                                <span className="badge badge-sm indicator-item bg-red-600 border-none text-white">2+</span>
+                            </div>
+                        </label>
+                    </Link>
+
                     {
                         user
                         &&
