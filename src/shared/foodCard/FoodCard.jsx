@@ -3,8 +3,11 @@ import { useContext } from "react";
 import { AuthContext } from "../../provider/AuthProvider";
 import Swal from "sweetalert2";
 import { useLocation, useNavigate } from "react-router-dom";
+import useCarts from "../../hooks/useCarts";
 
 const FoodCard = ({ item }) => {
+
+    const [, refetch ] = useCarts();
 
     const {_id,name,image,price,recipe} = item;
 
@@ -17,7 +20,8 @@ const FoodCard = ({ item }) => {
         if (user && user?.email) {
 
             const addededItem = {menuItemId: _id, name, image, price, email:user.email};
-
+            
+            refetch(); //to relad the fetch teh recent data
             fetch("http://localhost:5000/carts",{
                 method: "POST",
                 headers:{
@@ -36,6 +40,9 @@ const FoodCard = ({ item }) => {
                     }
                 })
                 .catch(er => console.log(er.message))
+
+           
+
         }
         else {
             Swal.fire({

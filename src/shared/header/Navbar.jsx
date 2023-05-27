@@ -4,10 +4,12 @@ import { Link } from "react-router-dom";
 import { AuthContext } from "../../provider/AuthProvider";
 import Swal from "sweetalert2";
 import { FaShoppingCart } from "react-icons/fa";
+import useCarts from "../../hooks/useCarts";
 
 const Navbar = () => {
 
     const { user, logOut } = useContext(AuthContext);
+    const [cart] = useCarts();
 
     const handleLogOut = () => {
         logOut()
@@ -69,7 +71,7 @@ const Navbar = () => {
                         <label className="btn btn-ghost btn-circle">
                             <div className="indicator">
                                 <FaShoppingCart className="text-2xl font-normal"></FaShoppingCart>
-                                <span className="badge badge-sm indicator-item bg-red-600 border-none text-white">2+</span>
+                                <span className="badge badge-sm indicator-item bg-red-600 border-none text-white">{cart?.length || "0"}</span>
                             </div>
                         </label>
                     </Link>
