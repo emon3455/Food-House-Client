@@ -2,10 +2,41 @@ import { Helmet } from "react-helmet-async";
 import SectionTitle from "../../../components/SectionTitle"
 import useCarts from "../../../hooks/useCarts";
 import { FaTrash } from "react-icons/fa";
+import Swal from "sweetalert2";
 const MyCart = () => {
 
-    const [cart] = useCarts();
+    const [cart, refetch] = useCarts();
     const total = cart.reduce((sum, item) => item.price + sum, 0);
+
+    const handleDelete = (id) => {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+
+                fetch(`http://localhost:5000/carts/${id}`, {
+                    method: "DELETE"
+                })
+                    .then(res => res.json())
+                    .then(data => {
+                        if (data.deletedCount > 0) {
+                            refetch();
+                            Swal.fire(
+                                'Deleted!',
+                                'item has been deleted.',
+                                'success'
+                            )
+                        }
+                    })
+            }
+        })
+    }
 
     return (
         <div className="w-full">
@@ -39,7 +70,7 @@ const MyCart = () => {
                         <tbody>
                             {
                                 cart.map((item, index) => {
-                                   return <tr key={item._id}>
+                                    return <tr key={item._id}>
                                         <td>{index + 1}</td>
                                         <td>
                                             <div className="avatar">
@@ -51,7 +82,7 @@ const MyCart = () => {
                                         <td>{item.name}</td>
                                         <td>${item.price}</td>
                                         <td>
-                                            <button className="bg-red-500 border-none text-xl p-2 text-white rounded-md">
+                                            <button onClick={() => handleDelete(item._id)} className="bg-red-500 border-none text-xl p-2 text-white rounded-md">
                                                 <FaTrash></FaTrash>
                                             </button>
                                         </td>

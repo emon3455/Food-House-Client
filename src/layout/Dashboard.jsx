@@ -20,7 +20,7 @@ const Dashboard = () => {
                     <h2 className="text-xl lg:text-4xl font-bold">Food House</h2>
                     <p className="text-lg lg:text-2xl font-semibold">Restaurant</p>
                 </div>
-                <ul className="menu p-4 w-80 text-base-content">
+                <ul className="menu p-4 w-80 bg-orange-300 text-base-content">
                     {/* <!-- Sidebar content here --> */}
                     <li><NavLink to="/dashboard/home"> <FaHome></FaHome> User Home </NavLink></li>
                     <li><NavLink to="/dashboard/reservation"> <FaCalendar></FaCalendar> Reservation</NavLink></li>
