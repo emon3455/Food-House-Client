@@ -3,20 +3,74 @@ import { useQuery } from "@tanstack/react-query";
 import { FaTrash, FaUserCog } from "react-icons/fa";
 import SectionTitle from "../../../components/SectionTitle";
 import { Helmet } from "react-helmet-async";
+import Swal from "sweetalert2";
+import { useContext } from "react";
+import { AuthContext } from "../../../provider/AuthProvider";
+import { deleteUser } from "firebase/auth";
 
 const AllUsers = () => {
 
-    const {data: users = [] , refetch } = useQuery( ['users'] , async()=>{
+    const { user } = useContext(AuthContext);
+
+    const { data: users = [], refetch } = useQuery(['users'], async () => {
         const res = await fetch("http://localhost:5000/users")
         return res.json()
     })
 
-    const handleMakeAdmin = (id) =>{
-
+    const handleMakeAdmin = (user) => {
+        fetch(`http://localhost:5000/users/admin/${user._id}`, {
+            method: "PATCH",
+        })
+            .then(res => res.json())
+            .then(data => {
+                console.log(data);
+                if (data.modifiedCount > 0) {
+                    refetch();
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Succussfully Done',
+                        text: `${user.name} is Admin Now!`,
+                    })
+                }
+            })
+            .catch(er => console.log(er.message))
     }
 
-    const handleDelete = (id) =>{
+    const handleDelete = (usr) => {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
 
+                fetch(`http://localhost:5000/users/${usr._id}`, {
+                    method: "DELETE"
+                })
+                    .then(res => res.json())
+                    .then(data => {
+                        if (data.deletedCount > 0) {
+
+                            deleteUser(user).then(() => {
+                                refetch();
+                                Swal.fire(
+                                    'Deleted!',
+                                    'User Deleted Successfully',
+                                    'success'
+                                )
+                            }).catch((error) => {
+                                console.log(error.message);
+                            });
+
+
+                        }
+                    })
+            }
+        })
     }
 
     return (
@@ -25,7 +79,7 @@ const AllUsers = () => {
                 <title>Food house | My Cart</title>
             </Helmet>
 
-            <SectionTitle subHeading="--- My Cart ---" heading="Wanna Add More?"></SectionTitle>
+            <SectionTitle subHeading="--- how Many?? ---" heading="Manage All Users"></SectionTitle>
 
             <div className="card-body mx-4 shadow-2xl rounded-xl">
 
@@ -37,7 +91,7 @@ const AllUsers = () => {
                     <table className="table table-zebra w-full">
                         {/* head */}
                         <thead>
-                            <tr>
+                            <tr >
                                 <th>#</th>
                                 <th>Name</th>
                                 <th>Email</th>
@@ -50,16 +104,20 @@ const AllUsers = () => {
                                 users.map((user, index) => {
                                     return <tr key={user._id}>
                                         <td>{index + 1}</td>
-                                        
+
                                         <td>{user.name}</td>
                                         <td>{user.email}</td>
                                         <td>
-                                            <button onClick={() => handleMakeAdmin(user._id)} className="bg-yellow-500 border-none text-xl p-2 text-white rounded-md">
-                                                <FaUserCog></FaUserCog>
-                                            </button>
+                                            {
+                                                user?.role == "admin" ? "admin"
+                                                    :
+                                                    <button onClick={() => handleMakeAdmin(user)} className="bg-yellow-500 border-none text-xl p-2 text-white rounded-md">
+                                                        <FaUserCog></FaUserCog>
+                                                    </button>
+                                            }
                                         </td>
                                         <td>
-                                            <button onClick={() => handleDelete(user._id)} className="bg-red-500 border-none text-xl p-2 text-white rounded-md">
+                                            <button onClick={() => handleDelete(user)} className="bg-red-500 border-none text-xl p-2 text-white rounded-md">
                                                 <FaTrash></FaTrash>
                                             </button>
                                         </td>
