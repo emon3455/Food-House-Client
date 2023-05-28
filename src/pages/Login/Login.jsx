@@ -1,13 +1,13 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/no-unescaped-entities */
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import login from "../../assets/others/authentication1.png";
-import { FaFacebookF, FaGithub, FaGoogle } from "react-icons/fa";
+import login from "../../assets/login.jpg";
 import { loadCaptchaEnginge, LoadCanvasTemplate, validateCaptcha } from 'react-simple-captcha';
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../provider/AuthProvider";
 import Swal from "sweetalert2";
 import { useForm } from "react-hook-form";
+import SocialLogin from "../../components/SocialLogin";
 
 const Login = () => {
 
@@ -63,7 +63,7 @@ const Login = () => {
     }
 
     return (
-        <div className='mt-10' >
+        <div className='mt-5' >
             <div className="grid grid-cols-1 md:grid-cols-2 justify-items-center items-center gap-5 p-2">
                 <div className="card w-full max-w-sm drop-shadow-2xl bg-base-100 order-2 md:order-1">
                     <form onSubmit={handleSubmit(onSubmit)} className="card-body">
@@ -105,18 +105,14 @@ const Login = () => {
                         {/* To Do: we have to add this into submit button--- disabled={disable} */}
                         <input type="submit" value="Login" className="btn btn-warning btn-sm mt-2"  />
                     </form>
-                    <div className="px-4 py-2">
+                    <div className="px-4 pb-2">
                         <p className="text-center text-gray-600">
                             Don't have an Account? <Link className="text-sky-600" to="/register">Create an account</Link>
                         </p>
-                        <p className="text-center font-bold">
-                            OR Login With
-                        </p>
-                        <div className="flex justify-evenly">
-                            <span className="p-4 btn-ghost rounded-full text-sky-600 text-lg"><FaFacebookF></FaFacebookF></span>
-                            <span className="p-4 btn-ghost rounded-full text-orange-400 text-lg"><FaGoogle></FaGoogle></span>
-                            <span className="p-4 btn-ghost rounded-full text-lg"><FaGithub></FaGithub></span>
-                        </div>
+                        <div className="divider">OR Continue With</div>
+
+                        <SocialLogin></SocialLogin>
+                        
                     </div>
 
                 </div>

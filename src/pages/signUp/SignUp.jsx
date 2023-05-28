@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/no-unescaped-entities */
-import { FaFacebookF, FaGithub, FaGoogle } from "react-icons/fa";
-import { Link, Navigate, useNavigate } from "react-router-dom";
+
+import { Link, Navigate, useLocation, useNavigate } from "react-router-dom";
 import img from "../../assets/others/authentication1.png"
 import { useForm } from "react-hook-form";
 import { Helmet } from "react-helmet-async";
@@ -9,6 +9,7 @@ import { useContext } from "react";
 import { AuthContext } from "../../provider/AuthProvider";
 import Swal from "sweetalert2";
 import { updateProfile } from "firebase/auth";
+import SocialLogin from "../../components/SocialLogin";
 
 const SignUp = () => {
 
@@ -24,25 +25,42 @@ const SignUp = () => {
                 const createdUser = res.user;
                 console.log(createdUser);
                 if (createdUser) {
-                    Swal.fire(
-                        'User created Successfully!',
-                        'Success!',
-                        'success'
-                    )
+                    
                     updateProfile(createdUser, {
                         displayName: data.name, photoURL: data.photo
                     }).then(() => {
-                        Swal.fire(
-                            'User Profile Updated!',
-                            'Success!',
-                            'success'
-                        );
 
-                        logOut()
-                            .then(() => {
-                                navigate("/login", { replace: true });
-                            })
-                            .catch(er => console.log(er))
+                        const savedUser = { name: data.name , email: data.email}
+                        console.log(savedUser);
+
+                        fetch("http://localhost:5000/users",{
+                            method: "POST",
+                            headers:{
+                                "Content-Type": "application/json",
+                            },
+                            body: JSON.stringify(savedUser)
+                        })
+                        .then(res=>res.json())
+                        .then(dt=>{
+                            console.log(dt);
+                            if(dt.insertedId){
+                                Swal.fire(
+                                    'User created Successfully!',
+                                    'Success!',
+                                    'success'
+                                )
+        
+                                logOut()
+                                    .then(() => {
+                                        navigate("/login", { replace: true });
+                                    })
+                                    .catch(er => console.log(er))
+                            }
+                        })
+                        .catch(er=> console.log(er.message))
+
+
+                        
 
                     }).catch((error) => {
                         Swal.fire({
@@ -72,7 +90,7 @@ const SignUp = () => {
             <Helmet>
                 <title>Food house | SignUp</title>
             </Helmet>
-            <div className='mt-2' >
+            <div className='' >
                 <div className="grid grid-cols-1 md:grid-cols-2 justify-items-center items-center gap-5 p-2">
                     <div className="card w-full max-w-sm drop-shadow-2xl bg-base-100 order-2 md:order-1">
                         <form onSubmit={handleSubmit(onSubmit)} className="card-body">
@@ -117,18 +135,12 @@ const SignUp = () => {
 
                             <input type="submit" value="Sign Up" className="btn btn-warning btn-sm mt-2" />
                         </form>
-                        <div className="px-4 py-2">
+                        <div className="px-4 pb-2">
                             <p className="text-center text-gray-600">
                                 Already have an Account? <Link className="text-sky-600" to="/login">Login</Link>
                             </p>
-                            <p className="text-center font-bold">
-                                OR SignUp With
-                            </p>
-                            <div className="flex justify-evenly">
-                                <span className="p-4 btn-ghost rounded-full text-sky-600 text-lg"><FaFacebookF></FaFacebookF></span>
-                                <span className="p-4 btn-ghost rounded-full text-orange-400 text-lg"><FaGoogle></FaGoogle></span>
-                                <span className="p-4 btn-ghost rounded-full text-lg"><FaGithub></FaGithub></span>
-                            </div>
+                            <div className="divider">OR Continue With</div>
+                            <SocialLogin></SocialLogin>
                         </div>
 
                     </div>
