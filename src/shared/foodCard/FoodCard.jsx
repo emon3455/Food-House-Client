@@ -7,7 +7,7 @@ import useCarts from "../../hooks/useCarts";
 
 const FoodCard = ({ item }) => {
 
-    const [, refetch ] = useCarts();
+    const [cart, refetch] = useCarts();
 
     const {_id,name,image,price,recipe} = item;
 

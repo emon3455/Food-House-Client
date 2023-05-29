@@ -67,7 +67,7 @@ const Navbar = () => {
                         </ul>
                     </div>
 
-                    <Link to="/dashboard/myCart">
+                    <Link to="/dashboard">
                         <label className="btn btn-ghost btn-circle">
                             <div className="indicator">
                                 <FaShoppingCart className="text-2xl font-normal"></FaShoppingCart>

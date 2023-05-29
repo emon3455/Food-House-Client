@@ -100,29 +100,63 @@ const AllUsers = () => {
                             </tr>
                         </thead>
                         <tbody>
-                            {
-                                users.map((user, index) => {
-                                    return <tr key={user._id}>
-                                        <td>{index + 1}</td>
+                            {/* {
 
-                                        <td>{user.name}</td>
-                                        <td>{user.email}</td>
-                                        <td>
-                                            {
-                                                user?.role == "admin" ? "admin"
-                                                    :
-                                                    <button onClick={() => handleMakeAdmin(user)} className="bg-yellow-500 border-none text-xl p-2 text-white rounded-md">
-                                                        <FaUserCog></FaUserCog>
+                                user.length > 0
+                                    ?
+                                    <>
+                                        {
+                                            users.map((user, index) => <tr key={user._id}>
+                                                <td>{index + 1}</td>
+
+                                                <td>{user.name}</td>
+                                                <td>{user.email}</td>
+                                                <td>
+                                                    {
+                                                        user?.role == "admin" ? "admin"
+                                                            :
+                                                            <button onClick={() => handleMakeAdmin(user)} className="bg-yellow-500 border-none text-xl p-2 text-white rounded-md">
+                                                                <FaUserCog></FaUserCog>
+                                                            </button>
+                                                    }
+                                                </td>
+                                                <td>
+                                                    <button onClick={() => handleDelete(user)} className="bg-red-500 border-none text-xl p-2 text-white rounded-md">
+                                                        <FaTrash></FaTrash>
                                                     </button>
-                                            }
-                                        </td>
-                                        <td>
-                                            <button onClick={() => handleDelete(user)} className="bg-red-500 border-none text-xl p-2 text-white rounded-md">
-                                                <FaTrash></FaTrash>
-                                            </button>
-                                        </td>
-                                    </tr>
-                                })
+                                                </td>
+                                            </tr>)
+                                        }
+                                    </>
+                                    :
+                                    <>
+                                        <tr className="text-center my-5">
+                                            <td className="text-2xl font-bold ">No User To Show!!</td>
+                                        </tr>
+                                    </>
+
+                            } */}
+                            {
+                                users.map((user, index) => <tr key={user._id}>
+                                    <td>{index + 1}</td>
+
+                                    <td>{user.name}</td>
+                                    <td>{user.email}</td>
+                                    <td>
+                                        {
+                                            user?.role == "admin" ? "admin"
+                                                :
+                                                <button onClick={() => handleMakeAdmin(user)} className="bg-yellow-500 border-none text-xl p-2 text-white rounded-md">
+                                                    <FaUserCog></FaUserCog>
+                                                </button>
+                                        }
+                                    </td>
+                                    <td>
+                                        <button onClick={() => handleDelete(user)} className="bg-red-500 border-none text-xl p-2 text-white rounded-md">
+                                            <FaTrash></FaTrash>
+                                        </button>
+                                    </td>
+                                </tr>)
                             }
 
                         </tbody>

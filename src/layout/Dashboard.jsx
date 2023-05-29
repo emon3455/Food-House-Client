@@ -10,7 +10,7 @@ const Dashboard = () => {
     const [cart] = useCarts();
 
     // TODO: we will make it dynamically
-    const isAdmin = true;
+    const isAdmin = false;
 
     return (
         <div className="drawer drawer-mobile">

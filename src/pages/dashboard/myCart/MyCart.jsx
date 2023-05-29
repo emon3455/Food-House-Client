@@ -69,26 +69,55 @@ const MyCart = () => {
                         </thead>
                         <tbody>
                             {
-                                cart.map((item, index) => {
-                                    return <tr key={item._id}>
-                                        <td>{index + 1}</td>
-                                        <td>
-                                            <div className="avatar">
-                                                <div className="mask mask-squircle w-12 h-12">
-                                                    <img src={item.image} alt="Avatar Tailwind CSS Component" />
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td>{item.name}</td>
-                                        <td>${item.price}</td>
-                                        <td>
-                                            <button onClick={() => handleDelete(item._id)} className="bg-red-500 border-none text-xl p-2 text-white rounded-md">
-                                                <FaTrash></FaTrash>
-                                            </button>
-                                        </td>
-                                    </tr>
-                                })
+                                cart.length > 0
+                                    ?
+                                    <>
+                                        {
+                                            cart.map((item, index) => <tr key={item._id}>
+                                                <td>{index + 1}</td>
+                                                <td>
+                                                    <div className="avatar">
+                                                        <div className="mask mask-squircle w-12 h-12">
+                                                            <img src={item.image} alt="Avatar Tailwind CSS Component" />
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td>{item.name}</td>
+                                                <td>${item.price}</td>
+                                                <td>
+                                                    <button onClick={() => handleDelete(item._id)} className="bg-red-500 border-none text-xl p-2 text-white rounded-md">
+                                                        <FaTrash></FaTrash>
+                                                    </button>
+                                                </td>
+                                            </tr>)
+                                        }
+                                    </> 
+                                    : 
+                                    <>
+                                        <tr className="text-center my-5">
+                                            <td className="text-2xl font-bold ">Please Add Some Item Nothing To Show!!!</td>
+                                        </tr>
+                                    </>
                             }
+                            {/* {
+                                cart.map((item, index) => <tr key={item._id}>
+                                    <td>{index + 1}</td>
+                                    <td>
+                                        <div className="avatar">
+                                            <div className="mask mask-squircle w-12 h-12">
+                                                <img src={item.image} alt="Avatar Tailwind CSS Component" />
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>{item.name}</td>
+                                    <td>${item.price}</td>
+                                    <td>
+                                        <button onClick={() => handleDelete(item._id)} className="bg-red-500 border-none text-xl p-2 text-white rounded-md">
+                                            <FaTrash></FaTrash>
+                                        </button>
+                                    </td>
+                                </tr>)
+                            } */}
 
                         </tbody>
                     </table>

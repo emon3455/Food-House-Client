@@ -3,49 +3,60 @@ import { createContext, useContext, useEffect, useState } from "react";
 import { createUserWithEmailAndPassword, getAuth, onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup, signOut } from "firebase/auth";
 import { app } from "../firebase/firebase.config";
 import { GoogleAuthProvider } from "firebase/auth";
+import axios from "axios";
 
 export const AuthContext = createContext(null);
 const auth = getAuth(app);
 const goggleProvider = new GoogleAuthProvider();
 
-const AuthProvider = ({children}) => {
+const AuthProvider = ({ children }) => {
 
-    const [ user, setUser] = useState(null);
+    const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
 
-    const signInWithGoggle=()=>{
+    const signInWithGoggle = () => {
         setLoading(true);
         return signInWithPopup(auth, goggleProvider)
     }
 
-    const createUser=(email,password)=>{
+    const createUser = (email, password) => {
         setLoading(true);
         return createUserWithEmailAndPassword(auth, email, password)
     }
 
-    const signInUser=(email,password)=>{
+    const signInUser = (email, password) => {
         setLoading(true);
         return signInWithEmailAndPassword(auth, email, password);
     }
 
-    const logOut=()=>{
+    const logOut = () => {
         setLoading(true);
-       return signOut(auth);
+        return signOut(auth);
     }
 
-    useEffect(()=>{
-        const unsubscribe = onAuthStateChanged(auth, currentUser=>{
+    useEffect(() => {
+        const unsubscribe = onAuthStateChanged(auth, currentUser => {
             setUser(currentUser);
+            if (currentUser) {
+                axios.post("http://localhost:5000/jwt", { email: currentUser.email })
+                    .then(data => {
+                        localStorage.setItem("access-token", data.data.token);
+                    })
+            }
+            else {
+                localStorage.removeItem('access-token');
+            }
+
             setLoading(false);
         });
 
-        return()=>{
+        return () => {
             unsubscribe();
         }
 
-    },[])
+    }, [])
 
-    const authInfo={
+    const authInfo = {
         user,
         loading,
         createUser,
