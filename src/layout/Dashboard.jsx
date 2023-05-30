@@ -4,13 +4,15 @@ import { BsFillBagFill } from "react-icons/bs";
 import { GrMenu } from "react-icons/gr";
 import useCarts from "../hooks/useCarts";
 import { HiAdjustmentsHorizontal } from "react-icons/hi2";
+import useAdmin from "../hooks/useAdmin";
 
 const Dashboard = () => {
 
     const [cart] = useCarts();
 
+    // const isAdmin = false;
     // TODO: we will make it dynamically
-    const isAdmin = false;
+    const [ isAdmin] = useAdmin();
 
     return (
         <div className="drawer drawer-mobile">
