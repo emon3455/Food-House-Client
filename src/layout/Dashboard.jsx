@@ -36,7 +36,7 @@ const Dashboard = () => {
                             ?
                             <>
                                 <li><NavLink to="/dashboard/adminHome"> <FaHome></FaHome> Admin Home </NavLink></li>
-                                <li><NavLink to="/dashboard/addItem"> <FaPlus></FaPlus> Add Items </NavLink></li>
+                                <li><NavLink to="/dashboard/addItem"> <FaPlus></FaPlus> Add Item </NavLink></li>
                                 <li><NavLink to="/dashboard/manageItem"> <HiAdjustmentsHorizontal></HiAdjustmentsHorizontal> Manage Item</NavLink></li>
                                 <li><NavLink to="/dashboard/manageBookings"> <FaBuffer></FaBuffer> Manage Bookings</NavLink></li>                            
                                 <li><NavLink to="/dashboard/allUsers"> <FaUsers></FaUsers> All Users </NavLink></li>

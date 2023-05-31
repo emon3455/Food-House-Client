@@ -4,7 +4,7 @@ import { AuthContext } from "../provider/AuthProvider";
 import useAdmin from "../hooks/useAdmin";
 
 
-const PrivateRoute = ({children}) => {
+const AdminRoute = ({children}) => {
 
     const {user, loading} = useContext(AuthContext);
     const  [ isAdmin, isAdminLoading] = useAdmin();
@@ -21,7 +21,7 @@ const PrivateRoute = ({children}) => {
         return children
     }
 
-    return <Navigate to="/login" state={{from:location}} replace></Navigate>;
+    return <Navigate to="/" state={{from:location}} replace></Navigate>;
 };
 
-export default PrivateRoute;
+export default AdminRoute;
