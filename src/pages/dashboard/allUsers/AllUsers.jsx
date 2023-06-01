@@ -78,7 +78,7 @@ const AllUsers = () => {
     return (
         <div>
             <Helmet>
-                <title>Food house | My Cart</title>
+                <title>Food house | All Users</title>
             </Helmet>
 
             <SectionTitle subHeading="--- how Many?? ---" heading="Manage All Users"></SectionTitle>
