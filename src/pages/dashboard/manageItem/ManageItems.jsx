@@ -2,15 +2,44 @@ import { Helmet } from "react-helmet-async";
 import SectionTitle from "../../../components/SectionTitle";
 import useMenu from "../../../hooks/useMenu";
 import { FaExternalLinkAlt, FaTrash } from "react-icons/fa";
+import Swal from "sweetalert2";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
 
 const ManageItems = () => {
 
-    const [menu] = useMenu();
+    const [menu, ,refetch] = useMenu();
+    const [axiosSecure] = useAxiosSecure();
 
-    const handleDelete=(id)=>{
-        console.log(id);
+    const handleDelete = (id) => {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+
+                axiosSecure.delete(`/menu/${id}`)
+                    .then(res => {
+                        console.log(res);
+                        if(res.data.deletedCount > 0) {
+                            refetch();
+                            Swal.fire(
+                                'Deleted!',
+                                'Item has been deleted.',
+                                'success'
+                            )
+                        }
+                    })
+                    .catch(er=> console.log(er.message))
+
+            }
+        })
     }
-    const handleUpdate=(id)=>{
+    const handleUpdate = (id) => {
         console.log(id);
     }
 
