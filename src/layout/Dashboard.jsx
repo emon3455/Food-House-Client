@@ -1,4 +1,4 @@
-import { FaHome, FaShoppingCart, FaCalendar, FaWallet, FaCommentAlt, FaBookmark, FaBuffer, FaUsers, FaPlus } from "react-icons/fa";
+import { FaHome, FaShoppingCart, FaCalendar, FaWallet, FaCommentAlt, FaBookmark, FaBuffer, FaUsers, FaPlus, FaMoneyCheckAlt } from "react-icons/fa";
 import { NavLink, Outlet } from "react-router-dom";
 import { BsFillBagFill } from "react-icons/bs";
 import { GrMenu } from "react-icons/gr";
@@ -47,7 +47,8 @@ const Dashboard = () => {
                                 <>
                                     <li><NavLink to="/dashboard/userHome"> <FaHome></FaHome> User Home </NavLink></li>
                                     <li><NavLink to="/dashboard/reservation"> <FaCalendar></FaCalendar> Reservation</NavLink></li>
-                                    <li><NavLink to="/dashboard/history"> <FaWallet></FaWallet> Payment History</NavLink></li>
+                                    <li><NavLink to="/dashboard/payment"> <FaMoneyCheckAlt></FaMoneyCheckAlt> Payment</NavLink></li>
+                                    <li><NavLink to="/dashboard/paymentHistory"> <FaWallet></FaWallet> Payment History</NavLink></li>
                                     <li>
                                         <NavLink to="/dashboard/myCart">
                                             <div className="indicator">

@@ -3,6 +3,7 @@ import SectionTitle from "../../../components/SectionTitle"
 import useCarts from "../../../hooks/useCarts";
 import { FaTrash } from "react-icons/fa";
 import Swal from "sweetalert2";
+import { Link } from "react-router-dom";
 const MyCart = () => {
 
     const [cart, refetch] = useCarts();
@@ -52,7 +53,9 @@ const MyCart = () => {
                 <div className="flex justify-around font-semibold h-5 text-xl">
                     <h4>Total Items: {cart.length}</h4>
                     <h4>Total Price: $<span className="text-violet-500 font-bold">{total.toFixed(3)}</span></h4>
-                    <button className="btn btn-warning btn-sm">PAY</button>
+                    <Link to="/dashboard/payment">
+                        <button className="btn btn-warning btn-sm">PAY</button>
+                    </Link>
                 </div>
 
                 <div className="overflow-x-auto my-5">
