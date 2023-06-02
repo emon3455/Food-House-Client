@@ -31,6 +31,8 @@ const CheckoutForm = ({ cart, price, refetch }) => {
 
 
     const handleSubmit = async (event) => {
+
+        setCardError("");
         event.preventDefault();
 
         if (!stripe || !elements) {
@@ -110,6 +112,7 @@ const CheckoutForm = ({ cart, price, refetch }) => {
         <div>
             <form className="card shadow-2xl w-2/3 mx-auto p-8" onSubmit={handleSubmit}>
                 <CardElement
+                className="input"
                     options={{
                         style: {
                             base: {

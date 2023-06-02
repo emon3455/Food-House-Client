@@ -5,11 +5,13 @@ import { AuthContext } from "../../provider/AuthProvider";
 import Swal from "sweetalert2";
 import { FaShoppingCart } from "react-icons/fa";
 import useCarts from "../../hooks/useCarts";
+import useAdmin from "../../hooks/useAdmin";
 
 const Navbar = () => {
 
     const { user, logOut } = useContext(AuthContext);
     const [cart] = useCarts();
+    const [isAdmin] = useAdmin();
 
     const handleLogOut = () => {
         logOut()
@@ -67,14 +69,26 @@ const Navbar = () => {
                         </ul>
                     </div>
 
-                    <Link to="/dashboard">
-                        <label className="btn btn-ghost btn-circle">
-                            <div className="indicator">
-                                <FaShoppingCart className="text-2xl font-normal"></FaShoppingCart>
-                                <span className="badge badge-sm indicator-item bg-red-600 border-none text-white">{cart?.length || "0"}</span>
-                            </div>
-                        </label>
-                    </Link>
+                    {
+                        isAdmin ?
+                            <Link to="/dashboard/adminHome">
+                                <label className="btn btn-ghost btn-circle">
+                                    <div className="indicator">
+                                        <FaShoppingCart className="text-2xl font-normal"></FaShoppingCart>
+                                        <span className="badge badge-sm indicator-item bg-red-600 border-none text-white">{cart?.length || "0"}</span>
+                                    </div>
+                                </label>
+                            </Link>
+                            :
+                            <Link to="/dashboard/userHome">
+                                <label className="btn btn-ghost btn-circle">
+                                    <div className="indicator">
+                                        <FaShoppingCart className="text-2xl font-normal"></FaShoppingCart>
+                                        <span className="badge badge-sm indicator-item bg-red-600 border-none text-white">{cart?.length || "0"}</span>
+                                    </div>
+                                </label>
+                            </Link>
+                    }
 
                     {
                         user
