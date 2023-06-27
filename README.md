@@ -4,18 +4,18 @@
 
 #### Features:
 
-    ##### Admin Features
+- ##### Admin Features
     - Add Menu Item
     - Delete Menu Item
     - Manage User
     - User can upload Food Image From Local Computer
 
-    ##### User Features
+- ##### User Features
     - Order item
     - Remove Orderd Item
     - Pay Money
 
-    #### Common Features
+- #### Common Features
     - Login/Logout/Register
 
 
