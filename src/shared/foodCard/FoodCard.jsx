@@ -22,7 +22,7 @@ const FoodCard = ({ item }) => {
             const addededItem = {menuItemId: _id, name, image, price, email:user.email};
             
             refetch(); //to relad the fetch teh recent data
-            fetch("http://localhost:5000/carts",{
+            fetch("https://food-house-server-rose.vercel.app/carts",{
                 method: "POST",
                 headers:{
                     "Content-Type": "application/json"

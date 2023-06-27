@@ -1,4 +1,4 @@
-import { FaHome, FaShoppingCart, FaCalendar, FaWallet, FaCommentAlt, FaBookmark, FaBuffer, FaUsers, FaPlus, FaMoneyCheckAlt } from "react-icons/fa";
+import { FaHome, FaShoppingCart, FaWallet, FaCommentAlt, FaUsers, FaPlus, FaMoneyCheckAlt } from "react-icons/fa";
 import { NavLink, Outlet } from "react-router-dom";
 import { BsFillBagFill } from "react-icons/bs";
 import { GrMenu } from "react-icons/gr";
@@ -39,14 +39,12 @@ const Dashboard = () => {
                                     <li><NavLink to="/dashboard/adminHome"> <FaHome></FaHome> Admin Home </NavLink></li>
                                     <li><NavLink to="/dashboard/addItem"> <FaPlus></FaPlus> Add Item </NavLink></li>
                                     <li><NavLink to="/dashboard/manageItems"> <HiAdjustmentsHorizontal></HiAdjustmentsHorizontal> Manage Items</NavLink></li>
-                                    <li><NavLink to="/dashboard/manageBookings"> <FaBuffer></FaBuffer> Manage Bookings</NavLink></li>
                                     <li><NavLink to="/dashboard/allUsers"> <FaUsers></FaUsers> All Users </NavLink></li>
                                 </>
                                 :
 
                                 <>
                                     <li><NavLink to="/dashboard/userHome"> <FaHome></FaHome> User Home </NavLink></li>
-                                    <li><NavLink to="/dashboard/reservation"> <FaCalendar></FaCalendar> Reservation</NavLink></li>
                                     <li><NavLink to="/dashboard/payment"> <FaMoneyCheckAlt></FaMoneyCheckAlt> Payment</NavLink></li>
                                     <li><NavLink to="/dashboard/paymentHistory"> <FaWallet></FaWallet> Payment History</NavLink></li>
                                     <li>
@@ -59,7 +57,6 @@ const Dashboard = () => {
                                         </NavLink>
                                     </li>
                                     <li><NavLink to="/dashboard/review"> <FaCommentAlt></FaCommentAlt> Add Review </NavLink></li>
-                                    <li><NavLink to="/dashboard/myBooking"> <FaBookmark></FaBookmark> My Booking </NavLink></li>
                                 </>
                         }
 

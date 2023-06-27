@@ -33,7 +33,7 @@ const SignUp = () => {
                         const savedUser = { name: data.name , email: data.email}
                         console.log(savedUser);
 
-                        fetch("http://localhost:5000/users",{
+                        fetch("https://food-house-server-rose.vercel.app/users",{
                             method: "POST",
                             headers:{
                                 "Content-Type": "application/json",

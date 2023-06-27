@@ -20,7 +20,7 @@ const AllUsers = () => {
     })
 
     const handleMakeAdmin = (user) => {
-        fetch(`http://localhost:5000/users/admin/${user._id}`, {
+        fetch(`https://food-house-server-rose.vercel.app/users/admin/${user._id}`, {
             method: "PATCH",
         })
             .then(res => res.json())
@@ -50,7 +50,7 @@ const AllUsers = () => {
         }).then((result) => {
             if (result.isConfirmed) {
 
-                fetch(`http://localhost:5000/users/${usr._id}`, {
+                fetch(`https://food-house-server-rose.vercel.app/users/${usr._id}`, {
                     method: "DELETE"
                 })
                     .then(res => res.json())

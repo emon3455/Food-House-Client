@@ -21,7 +21,7 @@ const MyCart = () => {
         }).then((result) => {
             if (result.isConfirmed) {
 
-                fetch(`http://localhost:5000/carts/${id}`, {
+                fetch(`https://food-house-server-rose.vercel.app/carts/${id}`, {
                     method: "DELETE"
                 })
                     .then(res => res.json())
